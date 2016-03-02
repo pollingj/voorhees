@@ -6,6 +6,7 @@ defmodule Voorhees.Mixfile do
       app: :voorhees,
       version: "0.1.1",
       name: "Voorhees",
+      elixirc_paths: elixirc_paths(Mix.env),
       description: "A library for validating JSON responses",
       source_url: "https://github.com/danmcclain/voorhees",
       package: package,
@@ -21,6 +22,10 @@ defmodule Voorhees.Mixfile do
     [applications: [:logger]]
   end
 
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
+
   # Dependencies can be Hex packages:
   #
   #   {:mydep, "~> 0.3.0"}
@@ -32,6 +37,7 @@ defmodule Voorhees.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
+      {:ecto, "~> 1.1.4", only: :test},
       {:poison, ">= 0.0.0"},
       {:ex_doc, "~> 0.6"},
       {:inch_ex, only: :docs}
