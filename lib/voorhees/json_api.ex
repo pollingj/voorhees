@@ -389,10 +389,10 @@ defmodule Voorhees.JSONApi do
   def meta_data_compare(record_1, record_2),
     do: record_1["id"] == record_2["id"] && record_1["type"] == record_2["type"]
 
-  defp format(%Ecto.DateTime{} = value),
-    do: Ecto.DateTime.to_iso8601(value)
-  defp format(%Ecto.Time{} = value),
-    do: Ecto.Time.to_iso8601(value)
+  defp format(%{__struct__: Ecto.DateTime} = value),
+    do: apply(Ecto.DateTime, :to_iso8601, [value])
+  defp format(%{__struct__: Ecto.Time} = value),
+    do: apply(Ecto.Time, :to_iso8601, [value])
   defp format(value), do: value
 
   defp serialize_record(record, opts) do
